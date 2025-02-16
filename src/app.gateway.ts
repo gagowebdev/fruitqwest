@@ -105,7 +105,6 @@ export class AppGateway {
 
   // Подписка пользователя на свой канал
   @SubscribeMessage('subscribe')
-  @SubscribeMessage('subscribe')
   handleSubscribe(client: any, payload: { userId: number }) {
     console.log(`📡 Клиент ${client.id} подписался на user_${payload.userId}`);
     
