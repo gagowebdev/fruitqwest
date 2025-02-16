@@ -4,6 +4,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  console.log('✅ API запускается без глобальных Guard\'ов');
+
   // Разрешаем CORS
   app.enableCors({
     origin: 'https://fruitquest.vercel.app/', // Указываем адрес фронтенда
