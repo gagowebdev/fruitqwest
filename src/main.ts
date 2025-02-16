@@ -1,6 +1,8 @@
 import 'dotenv/config'; // ✅ Добавлено
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import './bot'; // 👈 Теперь bot.ts будет собираться вместе с backend
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
