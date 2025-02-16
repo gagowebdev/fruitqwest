@@ -167,6 +167,23 @@ async createDeposit(@Request() req, @Body() body) {
     return { message: 'Запрос на вывод отправлен', amount, method, recipient, status: withdrawal.status };
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/confirm')
+  async confirmTransaction(@Param('id') id: number) {
+      const transaction = await this.transactionsRepository.findOne({
+          where: { id, status: TransactionStatus.CREATED }, // ✅ Разрешаем только для CREATED
+      });
+
+      if (!transaction) {
+          throw new NotFoundException('Транзакция не найдена или уже обработана');
+      }
+
+      transaction.status = TransactionStatus.PENDING; // ✅ Меняем CREATED → PENDING
+      await this.transactionsRepository.save(transaction);
+
+      return { message: 'Транзакция помечена как "Ожидание проверки администратора"', status: transaction.status };
+  }
+
   // ✅ Метод отмены депозита
   @UseGuards(JwtAuthGuard)
   @Delete(':id/cancel')

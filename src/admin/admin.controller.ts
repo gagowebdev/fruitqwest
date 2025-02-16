@@ -44,39 +44,6 @@ import {
     const transactions = await this.transactionsRepository.find({ where, relations: ['user'] });
     return { transactions };
     }
-
-    @Patch('transactions/:id/confirm')
-    async confirmTransaction(@Param('id') id: number) {
-        const transaction = await this.transactionsRepository.findOne({
-            where: { id, status: TransactionStatus.CREATED }, // ✅ Разрешаем только для CREATED
-        });
-
-        if (!transaction) {
-            throw new NotFoundException('Транзакция не найдена или уже обработана');
-        }
-
-        transaction.status = TransactionStatus.PENDING; // ✅ Меняем CREATED → PENDING
-        await this.transactionsRepository.save(transaction);
-
-        return { message: 'Транзакция помечена как "Ожидание проверки администратора"', status: transaction.status };
-    }
-
-
-    // ✅ Клиент нажал "Отмена"
-    @Delete('transactions/:id/cancel')
-    async cancelTransaction(@Param('id') id: number) {
-        const transaction = await this.transactionsRepository.findOne({
-            where: { id, status: TransactionStatus.PENDING },
-        });
-
-        if (!transaction) {
-            throw new NotFoundException('Транзакция не найдена или уже обработана');
-        }
-
-        await this.transactionsRepository.remove(transaction);
-
-        return { message: 'Транзакция успешно отменена' };
-    }
   
     // ✅ Одобрить транзакцию (депозит/вывод)
     @Patch('transactions/:id/approve')
