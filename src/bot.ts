@@ -6,7 +6,7 @@ const WEB_APP_URL = "https://fruitquest.vercel.app"; // 🔹 Ссылка на �
 const bot = new Telegraf(BOT_TOKEN);
 
 bot.start((ctx) => {
-  ctx.reply("Добро пожаловать! Открыть приложение:", {
+  ctx.reply("Добро пожаловать! Открыть приложениее:", {
     reply_markup: {
       inline_keyboard: [
         [{ text: "🚀 Открыть приложение", web_app: { url: WEB_APP_URL } }],
