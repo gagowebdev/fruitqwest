@@ -9,7 +9,7 @@ async function bootstrap() {
 
   // Разрешаем CORS
   app.enableCors({
-    origin: 'https://fruitquest.vercel.app/', // Указываем адрес фронтенда
+    origin: 'https://fruitquest.vercel.app', // Указываем адрес фронтенда
     credentials: true, // Разрешаем передачу cookies и заголовков авторизации
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
     methods: 'GET, POST, PATCH, DELETE, OPTIONS',
